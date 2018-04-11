@@ -41,7 +41,31 @@ def extract_names(filename):
   ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
   """
   # +++your code here+++
-  return
+  f = open(filename, 'rU')
+  year = ""
+  names = {}
+  for line in f:
+      print line
+      if len(year) != 4:
+        match = re.search(r'\<h3\salign\=\"center\"\>Popularity\sin\s(\d\d\d\d)\<\/h3\>', line)
+        # match = re.search(r'Popularity\sin\s(\d\d\d\d)', line)
+        if match:
+           year = match.group(1)
+        else: print "no year"
+      else:
+        match = re.search(r'\<tr\salign\=\"right\"\>\<td\>([\d]+)\<\/td\>\<td\>([\w]+)\<\/td\>\<td\>([\w]+)\<\/td\>', line)
+        if match:
+          name_no = match.group(1)
+          names[match.group(2)] = name_no
+          names[match.group(3)] = name_no
+        elif len(names)>0:
+          break
+        else: print "no names"
+  f.close()
+  info = [year]
+  name_list = [name+" "+names[name] for name in names]
+  info += sorted(name_list)
+  return info
 
 
 def main():
@@ -61,6 +85,8 @@ def main():
     del args[0]
 
   # +++your code here+++
+  print extract_names(args[0])
+
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
   
