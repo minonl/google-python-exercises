@@ -40,7 +40,6 @@ def match_ends(words):
 # before combining them.
 def front_x(words):
     # +++your code here+++
-    words.sort()
     xwords = []
     nxwords = []
     for word in words:
@@ -48,8 +47,7 @@ def front_x(words):
             xwords.append(word)
         else:
             nxwords.append(word)
-    words = xwords+nxwords
-    return words
+    return sorted(xwords)+sorted(nxwords)
 
 
 # C. sort_last
@@ -60,8 +58,7 @@ def front_x(words):
 # Hint: use a custom key= function to extract the last element form each tuple.
 def sort_last(tuples):
     # +++your code here+++
-    tuples.sort(key=key)
-    return tuples
+    return sorted(tuples, key=key)
 def key(tup):
     return tup[-1]
 
