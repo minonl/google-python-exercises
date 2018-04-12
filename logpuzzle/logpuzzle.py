@@ -33,8 +33,10 @@ def read_urls(filename):
   for line in f:
         match = re.search(r'GET\s([\/]\S*[puzzle]+\S*\.jpg)', line)
         if match:
-          urls.append('http://code.gogle.com'+match.group(1))
-  return urls        
+          url = 'http://code.gogle.com'+match.group(1)
+          if url not in urls:
+            urls.append('http://code.gogle.com'+match.group(1))
+  return sorted(urls)
 
 def download_images(img_urls, dest_dir):
   """Given the urls already in the correct order, downloads
