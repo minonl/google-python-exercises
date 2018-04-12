@@ -50,6 +50,16 @@ def copy_to(paths, dir):
             sys.stderr.write('copy failure: [from]'+paths+'|[to]'+dir)
 
 
+def zip_to(paths, zippath):
+    command = 'zip -j '+zippath
+    for path in paths:
+          command += ' ' + os.path.abspath(path)
+    print 'Command I\'m going to do:', command
+    (status, output) = commands.getstatusoutput(command)
+    if status:
+        sys.stderr.write(output)
+        sys.exit(status)
+
 def main():
     # This basic command line argument parsing code is provided.
     # Add code to call your functions below.
@@ -81,8 +91,10 @@ def main():
     # +++your code here+++
     # Call your functions
     paths = get_special_paths(args[0])
-    if len(todir)>0 :
-      copy_to(paths,todir)
+    if len(todir)>0:
+        copy_to(paths,todir)
+    if len(tozip)>0:
+        zip_to(paths,tozip)
 
 
 if __name__ == "__main__":
