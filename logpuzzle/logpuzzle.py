@@ -25,7 +25,16 @@ def read_urls(filename):
   Screens out duplicate urls and returns the urls sorted into
   increasing order."""
   # +++your code here+++
-  
+  if not os.path.exists(filename):
+    print "log file read error:", filename
+    sys.exit(2)
+  urls = []
+  f = open(filename,'rU')
+  for line in f:
+        match = re.search(r'GET\s([\/]\S*[puzzle]+\S*\.jpg)', line)
+        if match:
+          urls.append('http://code.gogle.com'+match.group(1))
+  return urls        
 
 def download_images(img_urls, dest_dir):
   """Given the urls already in the correct order, downloads
