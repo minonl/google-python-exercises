@@ -17,8 +17,20 @@ import commands
 
 # +++your code here+++
 # Write functions and modify main() to call them
-
-
+def get_special_paths(dir):
+    special_paths = []
+    try:
+      filenames = os.listdir(dir)
+      for filename in filenames:
+        match = re.search(r'\_\_[\w]+\_\_', filename)
+        if match:
+          special_paths.append(os.path.abspath(os.path.join(dir, filename)))
+    except IOError:
+      sys.stderr.write('error reading:'+dir)
+    else:
+      for path in special_paths:
+        print path
+      return special_paths
 
 def main():
   # This basic command line argument parsing code is provided.
@@ -50,6 +62,7 @@ def main():
 
   # +++your code here+++
   # Call your functions
+  get_special_paths(args[0])
   
 if __name__ == "__main__":
   main()
