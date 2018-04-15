@@ -46,15 +46,12 @@ def extract_names(filename):
     year = ""
     names = {}
     for line in f:
-        print(line)
         if len(year) == 0:
             match = re.search(
                 r'\<h3\salign\=\"center\"\>Popularity\sin\s(\d\d\d\d)\<\/h3\>', line)
             # match = re.search(r'Popularity\sin\s(\d\d\d\d)', line)
             if match:
                 year = match.group(1)
-            else:
-                print("no year")
         else:
             match = re.search(
                 r'\<tr\salign\=\"right\"\>\<td\>([\d]+)\<\/td\>\<td\>([\w]+)\<\/td\>\<td\>([\w]+)\<\/td\>', line)
@@ -72,9 +69,6 @@ def extract_names(filename):
                     names[name_female] = name_no
             elif len(names) > 0:
                 break
-            else:
-                print(names)
-                print("no names")
     f.close()
     info = [year]
     name_list = [name+" "+str(names[name]) for name in names]
@@ -102,7 +96,10 @@ def main():
     for f in args:
         name_list = extract_names(f)
         text = '\n'.join(name_list) + '\n'
-        print(text)
+        sf = open(f+'.summary','w')
+        sf.write(text)
+        sf.close()
+        # print(text)
 
     # For each filename, get the names, then either print the text output
     # or write it to a summary file
